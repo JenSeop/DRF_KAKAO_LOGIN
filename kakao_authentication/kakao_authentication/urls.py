@@ -1,22 +1,16 @@
-"""
-URL configuration for kakao_authentication project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
+from accounts import views
+from allauth.account.views import LogoutView
+from allauth.socialaccount.views import ConnectionsView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.main_page_view, name='main_page'),
+    path('kakao_login/', views.kakao_login_view, name='kakao_login'),
+    path('kakao_profile/', views.profile_view, name='kakao_profile'),
+    path('disconnect_kakao/', views.disconnect_kakao, name='disconnect_kakao'),  # 추가된 URL
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('social/connections/', ConnectionsView.as_view(), name='connections'),
+    path('accounts/kakao/login/callback/', views.KakaoLogin.as_view(), name='kakao_login_callback'),  # 추가된 URL
 ]
